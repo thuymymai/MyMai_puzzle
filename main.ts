@@ -7,49 +7,40 @@ const data = fs
   .toString()
   .trim()
   .split("\n");
-
-// map the children and parents for each planet to key-value hashmap
-const parseData = (list: any[]) => {
+  
+// map each planet to key-value hashmap with key = child planet & value = parent planet
+export const planetHashmap = (list: any[]) => {
   const hashmap = {};
   list.map((e) => {
     const tuple = e.split(")");
-    if (!hashmap[tuple[0]]) {
-      hashmap[tuple[0]] = {
-        parent: null,
-        children: [],
-      };
-    }
+    // check if child planet already exists in hashmap 
+    // since one planet only has one direct orbit
     if (!hashmap[tuple[1]]) {
-      hashmap[tuple[1]] = {
-        parent: null,
-        children: [],
-      };
+      hashmap[tuple[1]] = tuple[0];
     }
-    hashmap[tuple[0]].children.push(tuple[1]);
-    hashmap[tuple[1]].parent = tuple[0];
   });
   return hashmap;
 };
 
-// return array of all the direct and indirect orbits for a planet
-const findParents = (hashmap: { [x: string]: { parent: string; }; }, key: string) => {
-  const nodes = [];
+// array of all the direct and indirect orbits for a planet
+export const orbitArray = (hashmap: { [x: string]: string }, key: string) => {
+  const orbits = [];
   while (key != "COM") {
-    key = hashmap[key].parent;
-    nodes.push(key);
+    key = hashmap[key];
+    orbits.push(key);
   }
-  return nodes;
+  return orbits;
 };
 
-// get total orbits for all planets
-const getTotalOrbits = (hashmap: { [x: string]: { parent: string; }; }) => {
+// total orbits for all planets
+export const totalOrbits = (hashmap: { [x: string]: string }) => {
   let sum = 0;
-  Object.keys(hashmap).map((node) => {
-    sum += findParents(hashmap, node).length;
+  Object.keys(hashmap).map((planet) => {
+    sum += orbitArray(hashmap, planet).length;
   });
   return sum;
 };
 
-const result = getTotalOrbits(parseData(data))
+const result = totalOrbits(planetHashmap(data))
 
 console.log("Total direct and indirect orbits: ", result);
