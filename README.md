@@ -55,7 +55,7 @@ The total number of direct and indirect orbits in this example is 42.
 #### Q: What is the total number of direct and indirect orbits in your map data?
 
 ## How to run the solution
-Clone the repo:
+Install the project:
 ```
 git clone https://github.com/thuymymai/MyMai_puzzle.git
 ```
@@ -68,4 +68,8 @@ tsc main.ts
 ```
 ```
 node main.js
+```
+Run unit test:
+```
+npm test
 ```
