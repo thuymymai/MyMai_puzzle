@@ -32,8 +32,8 @@ const expectedResult = 42
 
 const expectedOrbits= ["K", "J", "E", "D", "C", "B", "COM"]
 
-describe('test parseData function', () => {
-	test('parse data should return a hashmap for each planet', () => {
+describe('test planetHashmap function', () => {
+	test('this function should return a hashmap with key = child planet and value = parent planet', () => {
 		expect(planetHashmap(mockMapData.split("\n"))).toEqual(expectedHashmapOutput)
 	})
 })
